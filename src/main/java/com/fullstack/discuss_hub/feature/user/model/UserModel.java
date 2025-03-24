@@ -48,7 +48,6 @@ public class UserModel extends Model {
 
     @NotNull(message = "{birth.date.required}")
     @JsonFormat(pattern = "yyyy-MM-dd")
-//    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate dateOfBirth;
     private String photoUrl;
 
