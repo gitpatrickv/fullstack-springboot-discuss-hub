@@ -4,16 +4,14 @@ import com.fullstack.discuss_hub.feature.community.model.Community;
 import com.fullstack.discuss_hub.feature.community_members.enums.CommunityRole;
 import com.fullstack.discuss_hub.feature.user.model.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@AllArgsConstructor
+@Builder
 @Table(name = "community_members")
 public class CommunityMember {
     @Id
@@ -25,8 +23,13 @@ public class CommunityMember {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "community_id")
     private Community community;
 
+    public CommunityMember(CommunityRole role, User user, Community community) {
+        this.role = role;
+        this.user = user;
+        this.community = community;
+    }
 }

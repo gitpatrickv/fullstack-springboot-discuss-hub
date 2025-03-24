@@ -4,10 +4,7 @@ import com.fullstack.discuss_hub.common.dto.AuditEntity;
 import com.fullstack.discuss_hub.feature.community_members.model.CommunityMember;
 import com.fullstack.discuss_hub.feature.post.model.Post;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name = "community")
 public class Community extends AuditEntity {
     @Id
@@ -26,7 +24,7 @@ public class Community extends AuditEntity {
     private String description;
 
     @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
-    private List<CommunityMember> members = new ArrayList<>();
+    private List<CommunityMember> members;
 
     @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
