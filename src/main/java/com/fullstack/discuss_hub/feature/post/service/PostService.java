@@ -6,5 +6,6 @@ import com.fullstack.discuss_hub.feature.post.model.PostModel;
 public interface PostService {
 
     PostModel createPost(CreatePostRequest request);
+    PostModel createPostInCommunity(String communityName, CreatePostRequest request);
 
 }
