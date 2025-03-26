@@ -11,10 +11,15 @@ import com.fullstack.discuss_hub.feature.post.repository.PostRepository;
 import com.fullstack.discuss_hub.feature.user.model.User;
 import com.fullstack.discuss_hub.feature.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class PostServiceImpl implements PostService{
 
     private final UserService userService;
@@ -23,23 +28,25 @@ public class PostServiceImpl implements PostService{
 
     private EntityToModelMapper<Post, PostModel> entityToModelMapper = new EntityToModelMapper<>(PostModel.class);
 
-    @Override
-    public PostModel createPost(CreatePostRequest request) {
-        return savePost(null, request);
-    }
-
-    @Override
-    public PostModel createPostInCommunity(String communityName, CreatePostRequest request) {
+    @Override   //TODO: Not yet implemented in Angular
+    public PostModel createPost(String communityName, CreatePostRequest request) {
         Community community = communityRepository.findByCommunityName(communityName)
                 .orElseThrow(() -> new ResourceNotFoundException("Community not found!"));
         return savePost(community, request);
     }
 
+    @Override   //TODO: Not yet implemented in Angular
+    public List<PostModel> getAllPost(String communityName, Pageable pageable) {
+        return postRepository.findPostByCommunityName(communityName, pageable)
+                .map(entityToModelMapper::map)
+                .getContent();
+    }
+
     private PostModel savePost(Community community, CreatePostRequest request){
         User user = userService.getCurrentAuthenticatedUser();
         Post savedPost = Post.builder()
+                .title(request.getTitle())
                 .content(request.getContent())
-                .postImageUrl(request.getPostImageUrl())
                 .community(community)
                 .user(user)
                 .build();

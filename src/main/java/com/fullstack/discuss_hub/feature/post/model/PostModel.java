@@ -15,7 +15,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 @JsonInclude(NON_DEFAULT)
 public class PostModel extends Model {
     private Integer postId;
+    private String title;
     private String content;
-    private String postImageUrl;
     private PostUserInfoResponse user;
 }

@@ -22,7 +22,7 @@ public class CommunityServiceImpl implements CommunityService {
     private final UserService userService;
     private final CommunityMemberRepository communityMemberRepository;
     @Transactional
-    @Override
+    @Override   //TODO: Not yet implemented in Angular
     public void createCommunity(CreateCommunityRequest request) {
 
         User user = userService.getCurrentAuthenticatedUser();

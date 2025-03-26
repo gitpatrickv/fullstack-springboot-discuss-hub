@@ -10,6 +10,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CreatePostRequest {
     @NotBlank
+    private String title;
+    @NotBlank
     private String content;
     private String postImageUrl;
 

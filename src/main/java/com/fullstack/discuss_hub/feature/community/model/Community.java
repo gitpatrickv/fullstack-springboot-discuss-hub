@@ -19,7 +19,7 @@ import java.util.List;
 public class Community extends AuditEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer community_id;
+    private Integer communityId;
     private String communityName;
     private String description;
 

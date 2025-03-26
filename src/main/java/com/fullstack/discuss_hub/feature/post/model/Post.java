@@ -22,10 +22,9 @@ public class Post extends AuditEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer postId;
-
+    private String title;
     @Column(columnDefinition = "TEXT")
     private String content;
-    private String postImageUrl;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
