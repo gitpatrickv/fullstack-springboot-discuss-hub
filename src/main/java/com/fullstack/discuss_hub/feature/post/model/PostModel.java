@@ -2,6 +2,7 @@ package com.fullstack.discuss_hub.feature.post.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fullstack.discuss_hub.common.dto.Model;
+import com.fullstack.discuss_hub.feature.post.dto.CommunityInfoResponse;
 import com.fullstack.discuss_hub.feature.post.dto.PostUserInfoResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,4 +19,5 @@ public class PostModel extends Model {
     private String title;
     private String content;
     private PostUserInfoResponse user;
+    private CommunityInfoResponse community;
 }

@@ -1,16 +1,20 @@
 package com.fullstack.discuss_hub.feature.post.service;
 
+import com.fullstack.discuss_hub.common.dto.response.PageResponse;
+import com.fullstack.discuss_hub.common.util.Pagination;
 import com.fullstack.discuss_hub.common.util.mapper.EntityToModelMapper;
 import com.fullstack.discuss_hub.exception.ResourceNotFoundException;
 import com.fullstack.discuss_hub.feature.community.model.Community;
 import com.fullstack.discuss_hub.feature.community.repository.CommunityRepository;
 import com.fullstack.discuss_hub.feature.post.dto.CreatePostRequest;
+import com.fullstack.discuss_hub.feature.post.dto.GetAllResponse;
 import com.fullstack.discuss_hub.feature.post.model.Post;
 import com.fullstack.discuss_hub.feature.post.model.PostModel;
 import com.fullstack.discuss_hub.feature.post.repository.PostRepository;
 import com.fullstack.discuss_hub.feature.user.model.User;
 import com.fullstack.discuss_hub.feature.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,20 +29,37 @@ public class PostServiceImpl implements PostService{
     private final UserService userService;
     private final PostRepository postRepository;
     private final CommunityRepository communityRepository;
+    private final Pagination pagination;
 
     private EntityToModelMapper<Post, PostModel> entityToModelMapper = new EntityToModelMapper<>(PostModel.class);
-
-    @Override   //TODO: Not yet implemented in Angular
+    //TODO: make a public community in flyway
+    @Override   //TODO: Not yet implemented in frontend
     public PostModel createPost(String communityName, CreatePostRequest request) {
         Community community = communityRepository.findByCommunityName(communityName)
                 .orElseThrow(() -> new ResourceNotFoundException("Community not found!"));
         return savePost(community, request);
     }
 
-    @Override   //TODO: Not yet implemented in Angular
-    public List<PostModel> getAllPost(String communityName, Pageable pageable) {
-        return postRepository.findPostByCommunityName(communityName, pageable)
-                .map(entityToModelMapper::map)
+    @Override
+    public GetAllResponse getAllPostFromCommunity(String communityName, Pageable pageable) {
+        Page<Post> posts = postRepository.findPostByCommunityName(communityName, pageable);
+        return this.getResponse(posts);
+    }
+
+    @Override
+    public GetAllResponse getAllPost(Pageable pageable) {
+        Page<Post> posts = postRepository.findAll(pageable);
+        return this.getResponse(posts);
+    }
+
+    private GetAllResponse getResponse(Page<Post> post){
+        List<PostModel> models = this.getAll(post);
+        PageResponse pageResponse = pagination.getPagination(post);
+        return new GetAllResponse(models, pageResponse);
+    }
+
+    private List<PostModel> getAll(Page<Post> post){
+        return post.map(entityToModelMapper::map)
                 .getContent();
     }
 

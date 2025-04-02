@@ -33,7 +33,7 @@ public class Post extends AuditEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "community_id")
     private Community community;
 }

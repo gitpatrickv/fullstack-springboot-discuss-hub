@@ -33,7 +33,7 @@ public class User extends AuditEntity implements UserDetails {
 
     private String email;
     private String password;
-    private LocalDate dateOfBirth;
+
     private String photoUrl;
 
     @Enumerated(EnumType.STRING)

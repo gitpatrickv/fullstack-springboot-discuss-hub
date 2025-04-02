@@ -13,4 +13,5 @@ public interface PostRepository extends JpaRepository<Post,Integer> {
 
     @Query("SELECT p FROM Post p WHERE p.community.communityName = :communityName")
     Page<Post> findPostByCommunityName(@Param("communityName") String communityName, Pageable pageable);
+    Page<Post> findAll(Pageable pageable);
 }

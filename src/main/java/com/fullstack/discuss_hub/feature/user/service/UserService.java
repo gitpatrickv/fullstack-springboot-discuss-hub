@@ -8,7 +8,4 @@ public interface UserService {
     UserModel getCurrentUserInfo();
     User getCurrentAuthenticatedUser();
     Integer getCurrentUserId();
-
-    String returnString();
-
 }

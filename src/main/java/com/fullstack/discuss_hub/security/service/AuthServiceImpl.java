@@ -41,7 +41,6 @@ public class AuthServiceImpl implements AuthService{
                 .name(userModel.getName())
                 .email(userModel.getEmail())
                 .password(passwordEncoder.encode(userModel.getPassword()))
-                .dateOfBirth(userModel.getDateOfBirth())
                 .gender(userModel.getGender())
                 .role(Role.USER)
                 .accountNonExpired(true)

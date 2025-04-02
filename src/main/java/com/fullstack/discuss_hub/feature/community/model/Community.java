@@ -22,6 +22,7 @@ public class Community extends AuditEntity {
     private Integer communityId;
     private String communityName;
     private String description;
+    private String communityPhotoUrl;
 
     @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
     private List<CommunityMember> members;
