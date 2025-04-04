@@ -31,7 +31,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize ->
                                 authorize
                                         .requestMatchers("/api/auth/**").permitAll()
-                                        .requestMatchers(HttpMethod.GET,"/api/post").permitAll()
+                                        .requestMatchers(HttpMethod.GET,"/api/post/**").permitAll()
+                                        .requestMatchers(HttpMethod.GET,"/api/image/**").permitAll()
                                         .anyRequest().authenticated()
                                         );
         httpSecurity.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
