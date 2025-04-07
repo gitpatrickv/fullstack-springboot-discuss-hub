@@ -33,7 +33,7 @@ public class PostServiceImpl implements PostService{
 
     private EntityToModelMapper<Post, PostModel> entityToModelMapper = new EntityToModelMapper<>(PostModel.class);
     //TODO: make a public community in flyway
-    @Override   //TODO: Not yet implemented in frontend
+    @Override
     public PostModel createPost(String communityName, CreatePostRequest request) {
         Community community = communityRepository.findByCommunityName(communityName)
                 .orElseThrow(() -> new ResourceNotFoundException("Community not found!"));
@@ -50,6 +50,13 @@ public class PostServiceImpl implements PostService{
     public GetAllResponse getAllPost(Pageable pageable) {
         Page<Post> posts = postRepository.findAll(pageable);
         return this.getResponse(posts);
+    }
+
+    @Override
+    public PostModel getOnePost(String postId) {
+        return postRepository.findById(Integer.parseInt(postId))
+                .map(entityToModelMapper::map)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Post Id %s not found!", postId)));
     }
 
     private GetAllResponse getResponse(Page<Post> post){

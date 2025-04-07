@@ -11,4 +11,5 @@ public class CommunityInfoResponse {
     private Integer communityId;
     private String communityName;
     private String description;
+    private String communityPhotoUrl;
 }

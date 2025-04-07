@@ -13,6 +13,5 @@ public class CreatePostRequest {
     private String title;
     @NotBlank
     private String content;
-    private String postImageUrl;
 
 }

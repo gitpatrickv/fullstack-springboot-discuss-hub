@@ -10,5 +10,5 @@ public interface PostService {
     PostModel createPost(String communityName, CreatePostRequest request);
     GetAllResponse getAllPostFromCommunity(String communityName, Pageable pageable);
     GetAllResponse getAllPost(Pageable pageable);
-
+    PostModel getOnePost(String postId);
 }
