@@ -13,37 +13,51 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class CommunityServiceImpl implements CommunityService {
 
     private final CommunityRepository communityRepository;
     private final UserService userService;
     private final CommunityMemberRepository communityMemberRepository;
-    @Transactional
+
     @Override   //TODO: Not yet implemented in frontend
     public void createCommunity(CreateCommunityRequest request) {
-
-        User user = userService.getCurrentAuthenticatedUser();
-
         Community community = Community.builder()
                 .communityName(request.getCommunityName())
                 .description(request.getDescription())
                 .members(new ArrayList<>())
                 .build();
         communityRepository.save(community);
+        CommunityMember communityMember = this.communityBuilder(community, CommunityRole.ADMIN);
+        community.getMembers().add(communityMember);
+    }
 
+    @Override
+    public void joinCommunity(String name) {
+        int userId = userService.getCurrentUserId();
+        Optional<CommunityMember> existingMember = communityMemberRepository.findExistingMember(name, userId);
+
+        if(existingMember.isPresent()){
+            communityMemberRepository.deleteByUser_UserIdAndCommunity_CommunityName(userId, name);
+        } else {
+            Optional<Community> community = communityRepository.findByCommunityName(name);
+            community.ifPresent(com -> this.communityBuilder(com, CommunityRole.MEMBER));
+        }
+    }
+
+    private CommunityMember communityBuilder(Community community, CommunityRole role){
+        User user = userService.getCurrentAuthenticatedUser();
         CommunityMember communityMember = CommunityMember.builder()
-                .role(CommunityRole.ADMIN)
+                .role(role)
                 .user(user)
                 .community(community)
                 .build();
         communityMemberRepository.save(communityMember);
 
-        community.getMembers().add(communityMember);
-
+        return communityMember;
     }
-
-
 }

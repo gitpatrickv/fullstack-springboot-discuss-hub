@@ -5,4 +5,5 @@ import com.fullstack.discuss_hub.feature.community.dto.CreateCommunityRequest;
 public interface CommunityService {
 
     void createCommunity(CreateCommunityRequest request);
+    void joinCommunity(String name);
 }

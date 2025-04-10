@@ -21,4 +21,10 @@ public class CommunityController {
         log.info("Create Community: Name - {}, Description - {}", request.getCommunityName(), request.getDescription());
         communityService.createCommunity(request);
     }
+    @PutMapping("/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public void joinCommunity(@PathVariable String name) {
+        log.info("JoinCommunity: Community Name: {}", name);
+        communityService.joinCommunity(name);
+    }
 }

@@ -1,4 +1,4 @@
-package com.fullstack.discuss_hub.feature.post.dto;
+package com.fullstack.discuss_hub.feature.community.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CommunityInfoResponse {
+public class CommunityModel {
     private Integer communityId;
     private String communityName;
     private String description;

@@ -17,6 +17,7 @@ public class CommunityMember {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer memberId;
+    @Enumerated(EnumType.STRING)
     private CommunityRole role;
 
     @ManyToOne
@@ -26,10 +27,4 @@ public class CommunityMember {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "community_id")
     private Community community;
-
-    public CommunityMember(CommunityRole role, User user, Community community) {
-        this.role = role;
-        this.user = user;
-        this.community = community;
-    }
 }
