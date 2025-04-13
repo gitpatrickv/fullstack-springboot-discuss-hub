@@ -25,7 +25,7 @@ public class Community extends AuditEntity {
     private String communityPhotoUrl;
 
     @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
-    private List<CommunityMember> members;
+    private List<CommunityMember> members = new ArrayList<>();
 
     @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
