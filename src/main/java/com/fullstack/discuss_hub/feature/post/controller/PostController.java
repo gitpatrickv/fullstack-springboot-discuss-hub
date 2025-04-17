@@ -31,14 +31,14 @@ public class PostController {
     }
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public GetAllResponse getAllPost(@RequestParam(value = "communityName", required = false) String communityName,
+    public GetAllResponse getAllPost(@RequestParam(value = "communityName") String communityName,
                                      @RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
                                      @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                      @RequestParam(value = "sortBy", defaultValue = "createdDate") String sortBy,
                                      @RequestParam(value = "sortDirection", defaultValue = "DESC") String sortDirection) {
         Pageable pageable = createPaginationAndSorting(pageNo,pageSize,sortBy,sortDirection);
         log.info("GetAllPost - Community Name: {}, SortBy: {}, SortDir: {}", communityName, sortBy, sortDirection);
-        return communityName != null ? postService.getAllPostFromCommunity(communityName, pageable) : postService.getAllPost(pageable);
+        return communityName.equals("HOME") ? postService.getAllPost(pageable) : postService.getAllPostFromCommunity(communityName, pageable);
     }
     @GetMapping("/{postId}")
     public ResponseEntity<PostModel> getOnePost(@PathVariable String postId){

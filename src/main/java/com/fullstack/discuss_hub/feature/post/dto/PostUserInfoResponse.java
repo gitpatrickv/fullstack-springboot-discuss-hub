@@ -13,6 +13,6 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 @JsonInclude(NON_DEFAULT)
 public class PostUserInfoResponse {
     private Long userId;
-    private String name;
+    private String username;
     private String photoUrl;
 }

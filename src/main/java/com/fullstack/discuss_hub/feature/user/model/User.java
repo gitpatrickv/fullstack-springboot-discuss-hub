@@ -29,7 +29,7 @@ public class User extends AuditEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
-    private String name;
+    private String username;
 
     private String email;
     private String password;
@@ -62,7 +62,7 @@ public class User extends AuditEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override

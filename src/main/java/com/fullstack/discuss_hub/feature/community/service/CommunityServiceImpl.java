@@ -1,6 +1,7 @@
 package com.fullstack.discuss_hub.feature.community.service;
 
 import com.fullstack.discuss_hub.common.util.mapper.EntityToModelMapper;
+import com.fullstack.discuss_hub.exception.ResourceNotFoundException;
 import com.fullstack.discuss_hub.feature.community.dto.CreateCommunityRequest;
 import com.fullstack.discuss_hub.feature.community.model.Community;
 import com.fullstack.discuss_hub.feature.community.model.CommunityModel;
@@ -47,9 +48,10 @@ public class CommunityServiceImpl implements CommunityService {
         if(existingMember.isPresent()){
             communityMemberRepository.deleteByUser_UserIdAndCommunity_CommunityName(userId, name);
         } else {
-            Optional<Community> community = communityRepository.findByCommunityName(name);
-            community.ifPresent(com -> this.communityMemberBuilder(com, CommunityRole.MEMBER));
-            return this.entityToModelMapper.map(community.get());
+            Community community = communityRepository.findByCommunityName(name)
+                    .orElseThrow(() -> new ResourceNotFoundException("Community not found"));
+            this.communityMemberBuilder(community, CommunityRole.MEMBER);
+            return this.entityToModelMapper.map(community);
         }
 
         throw new IllegalArgumentException("Invalid Community");

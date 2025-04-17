@@ -38,7 +38,7 @@ public class AuthServiceImpl implements AuthService{
     @Override
     public LoginResponse registerUser(UserModel userModel) {
         User user = User.builder()
-                .name(userModel.getName())
+                .username(userModel.getUsername())
                 .email(userModel.getEmail())
                 .password(passwordEncoder.encode(userModel.getPassword()))
                 .gender(userModel.getGender())
