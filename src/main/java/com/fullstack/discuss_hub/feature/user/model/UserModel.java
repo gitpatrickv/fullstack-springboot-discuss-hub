@@ -33,6 +33,7 @@ public class UserModel extends Model {
     @NotBlank(message = "{name.required}")
     private String username;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @UniqueEmailValid
     @NotBlank(message = "{email.required}")
     @Email(message = "{invalid.email.format}")
@@ -51,7 +52,7 @@ public class UserModel extends Model {
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+
     @Enumerated(EnumType.STRING)
     private Role role;
 

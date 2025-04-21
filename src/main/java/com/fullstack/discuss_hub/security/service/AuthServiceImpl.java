@@ -60,7 +60,6 @@ public class AuthServiceImpl implements AuthService{
             loginAttemptService.resetAttempt(email);
             return LoginResponse.builder()
                     .jwtToken(jwtService.generateToken(authentication))
-                    .role(authentication.getAuthorities().iterator().next().getAuthority())
                     .build();
         } catch (BadCredentialsException ex) {
             loginAttemptService.handleLoginAttempt(email);
