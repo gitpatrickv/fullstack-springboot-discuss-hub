@@ -17,6 +17,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer commentId;
+    @Column(columnDefinition = "TEXT")
     private String comment;
 
     @ManyToOne(fetch = FetchType.LAZY)
