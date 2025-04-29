@@ -52,3 +52,9 @@ CREATE TABLE IF NOT EXISTS login_attempts (
      `is_user_locked` BOOLEAN DEFAULT FALSE
 );
 
+CREATE TABLE IF NOT EXISTS votes (
+    `vote_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `post_id` INT NOT NULL,
+    `user_id` INT NOT NULL,
+    `type` ENUM('UPVOTE', 'DOWNVOTE')
+);

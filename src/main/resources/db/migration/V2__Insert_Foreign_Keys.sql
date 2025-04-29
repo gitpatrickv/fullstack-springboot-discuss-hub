@@ -9,3 +9,7 @@ ADD CONSTRAINT fk_member_community_id FOREIGN KEY (community_id) REFERENCES comm
 ALTER TABLE comments
 ADD CONSTRAINT fk_comment_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
 ADD CONSTRAINT fk_comment_post_id FOREIGN KEY (post_id) REFERENCES posts(post_id);
+
+ALTER TABLE votes
+ADD CONSTRAINT fk_vote_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
+ADD CONSTRAINT fk_vote_post_id FOREIGN KEY (post_id) REFERENCES posts(post_id);

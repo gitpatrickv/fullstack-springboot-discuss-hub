@@ -1,14 +1,26 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://discusshub:3306/discusshub-db
     username: root
-    password: patrick
-    url: jdbc:mysql://localhost:3306/discusshub
+    password: password
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
+  flyway:
+    enabled: true
+  data:
+    redis:
+      host: redis
+      port: 6379
+  cache:
+    type: redis
 application:
   security:
     jwt:
       secret-key: 6jZy59I3gNLH1Pj45sJT9/E0SSQUA1yNcAV1yZaXiwE
       expiration: 604800000 # 1 week
+
+#    url: jdbc:mysql://localhost:3306/discusshub
+#    username: root
+#    password: patrick
