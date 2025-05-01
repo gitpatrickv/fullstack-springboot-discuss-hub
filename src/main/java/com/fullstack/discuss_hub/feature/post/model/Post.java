@@ -3,6 +3,7 @@ package com.fullstack.discuss_hub.feature.post.model;
 import com.fullstack.discuss_hub.common.dto.AuditEntity;
 import com.fullstack.discuss_hub.feature.comment.model.Comment;
 import com.fullstack.discuss_hub.feature.community.model.Community;
+import com.fullstack.discuss_hub.feature.post.enums.PostStatus;
 import com.fullstack.discuss_hub.feature.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,6 +26,8 @@ public class Post extends AuditEntity {
     private String title;
     @Column(columnDefinition = "TEXT")
     private String content;
+    @Enumerated(EnumType.STRING)
+    private PostStatus status;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();

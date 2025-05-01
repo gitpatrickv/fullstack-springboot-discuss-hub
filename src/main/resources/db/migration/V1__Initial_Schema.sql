@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS posts (
      `community_id` INT NOT NULL,
      `title` VARCHAR(255) NOT NULL,
      `content` TEXT,
+     `status` ENUM('ACTIVE', 'DELETED'),
      `created_date` TIMESTAMP
 );
 

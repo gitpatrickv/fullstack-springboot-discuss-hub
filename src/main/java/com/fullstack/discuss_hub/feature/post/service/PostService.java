@@ -11,4 +11,5 @@ public interface PostService {
     GetAllResponse getAllPostFromCommunity(String communityName, Pageable pageable);
     GetAllResponse getAllPost(Pageable pageable);
     PostModel getOnePost(String postId);
+    void deletePost(Integer postId);
 }

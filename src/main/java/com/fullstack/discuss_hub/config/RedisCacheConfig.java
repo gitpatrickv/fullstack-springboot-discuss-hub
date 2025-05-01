@@ -23,7 +23,7 @@ public class RedisCacheConfig {
         objectMapper.registerModule(new JavaTimeModule());
 
         RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofMinutes(5))
+                .entryTtl(Duration.ofMinutes(60))
                 .disableCachingNullValues()
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(
                         new Jackson2JsonRedisSerializer<>(objectMapper, PostModel.class)));

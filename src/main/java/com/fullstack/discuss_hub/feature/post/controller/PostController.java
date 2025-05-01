@@ -47,6 +47,12 @@ public class PostController {
         log.info("GetOnePost: PostId: {} was retrieved successfully", postId);
         return ResponseEntity.ok(postModel);
     }
+    @DeleteMapping("/{postId}")
+    public void deletePost(@PathVariable Integer postId) {
+        log.info("Delete Post Request with ID : {}", postId);
+        postService.deletePost(postId);
+        log.info("Deleted Post with Id : {}", postId);
+    }
 
 }
 
