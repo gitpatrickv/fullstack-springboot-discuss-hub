@@ -33,11 +33,6 @@ public class UserServiceImpl implements UserService {
         return getUserObject().getUserId();
     }
 
-    @Override
-    public String returnString() {
-        return "String coming from backend";
-    }
-
     private User getUserObject(){
         return (User) SecurityContextHolder
                 .getContext()

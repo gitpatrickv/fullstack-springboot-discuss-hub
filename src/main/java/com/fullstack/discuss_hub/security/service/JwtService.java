@@ -1,5 +1,7 @@
 package com.fullstack.discuss_hub.security.service;
 
+import com.fullstack.discuss_hub.feature.user.enums.Role;
+import com.fullstack.discuss_hub.feature.user.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -9,15 +11,11 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.crypto.SecretKey;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 public class JwtService {
@@ -42,15 +40,16 @@ public class JwtService {
     }
 
     public String generateToken(Authentication authentication){
-        String username = authentication.getName();
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        String roles = getRole(authorities);
+        User user = (User) authentication.getPrincipal();
+
+        String username = user.getUsername();
+        Role role = user.getRole();
         Date currentDate = new Date();
         Date expireDate = new Date(currentDate.getTime() + jwtExpiration);
 
         return Jwts.builder()
                 .subject(username)
-                .claim("role", roles)
+                .claim("role", role)
                 .issuedAt(currentDate)
                 .expiration(expireDate)
                 .signWith(key())
@@ -80,14 +79,4 @@ public class JwtService {
             throw new RuntimeException(e);
         }
     }
-
-    private String getRole (Collection<? extends GrantedAuthority> authorities) {
-        Set<String> auths = new HashSet<>();
-
-        for(GrantedAuthority authority: authorities){
-            auths.add(authority.getAuthority());
-        }
-        return String.join(",", auths);
-    }
-
 }

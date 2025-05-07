@@ -38,10 +38,9 @@ public class AuthServiceImpl implements AuthService{
     @Override
     public LoginResponse registerUser(UserModel userModel) {
         User user = User.builder()
-                .name(userModel.getName())
+                .username(userModel.getUsername())
                 .email(userModel.getEmail())
                 .password(passwordEncoder.encode(userModel.getPassword()))
-                .dateOfBirth(userModel.getDateOfBirth())
                 .gender(userModel.getGender())
                 .role(Role.USER)
                 .accountNonExpired(true)
@@ -61,7 +60,6 @@ public class AuthServiceImpl implements AuthService{
             loginAttemptService.resetAttempt(email);
             return LoginResponse.builder()
                     .jwtToken(jwtService.generateToken(authentication))
-                    .role(authentication.getAuthorities().iterator().next().getAuthority())
                     .build();
         } catch (BadCredentialsException ex) {
             loginAttemptService.handleLoginAttempt(email);

@@ -22,9 +22,4 @@ public class UserController {
         log.info("fetching current user info");
         return ResponseEntity.ok(userService.getCurrentUserInfo());
     }
-    @GetMapping("/string")
-    public ResponseEntity<String> getString() {
-        return ResponseEntity.ok("String coming from backend");
-    }
-
 }

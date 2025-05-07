@@ -1,0 +1,61 @@
+services:
+  discusshub:
+    container_name: discusshub
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: discusshub-db
+      MYSQL_ROOT_PASSWORD: password
+      TZ: Asia/Manila
+    ports:
+      - "3310:3306"
+    volumes:
+      - discusshub:/var/lib/mysql
+    networks:
+      - discusshub-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "discusshub", "--password=password" ]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+      timeout: 5s
+
+  redis:
+    image: redis:7.4.2
+    container_name: redis
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - discusshub-network
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+      timeout: 5s
+
+  discusshub-api:
+    container_name: discusshub-platform
+    image: gitpatrickv/discusshub-platform:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - discusshub-network
+    depends_on:
+      discusshub:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: always
+
+volumes:
+  discusshub:
+  redis_data:
+
+networks:
+  discusshub-network:
+    driver: bridge

@@ -3,6 +3,7 @@ package com.fullstack.discuss_hub.security.config;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -30,7 +31,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize ->
                                 authorize
                                         .requestMatchers("/api/auth/**").permitAll()
-                                        .anyRequest().permitAll()
+                                        .requestMatchers(HttpMethod.GET,"/api/post/**").permitAll()
+                                        .requestMatchers(HttpMethod.GET,"/api/image/**").permitAll()
+                                        .anyRequest().authenticated()
                                         );
         httpSecurity.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         httpSecurity.authenticationProvider(authenticationProvider);
