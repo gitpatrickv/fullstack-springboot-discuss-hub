@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS community_members (
 
 CREATE TABLE IF NOT EXISTS comments (
      `comment_id` INT AUTO_INCREMENT PRIMARY KEY,
+     `parent_comment_id` INT DEFAULT NULL,
      `post_id` INT NOT NULL,
      `user_id` INT NOT NULL,
      `comment` TEXT

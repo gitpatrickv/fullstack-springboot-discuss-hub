@@ -2,6 +2,7 @@ package com.fullstack.discuss_hub.feature.post.service;
 
 import com.fullstack.discuss_hub.feature.post.dto.CreatePostRequest;
 import com.fullstack.discuss_hub.feature.post.dto.GetAllResponse;
+import com.fullstack.discuss_hub.feature.post.model.Post;
 import com.fullstack.discuss_hub.feature.post.model.PostModel;
 import org.springframework.data.domain.Pageable;
 
@@ -12,4 +13,5 @@ public interface PostService {
     GetAllResponse getAllPost(Pageable pageable);
     PostModel getOnePost(String postId);
     void deletePost(Integer postId);
+    Post getPostById(String postId);
 }

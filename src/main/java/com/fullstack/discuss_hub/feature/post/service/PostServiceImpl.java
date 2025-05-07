@@ -82,6 +82,12 @@ public class PostServiceImpl implements PostService{
         postRepository.softDeletePost(postId, PostStatus.DELETED);
     }
 
+    @Override
+    public Post getPostById(String postId) {
+        return postRepository.findById(Integer.parseInt(postId))
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Post Id %s not found!", postId)));
+    }
+
     private GetAllResponse getResponse(Page<Post> post){
         List<PostModel> models = this.getAll(post);
         PageResponse pageResponse = pagination.getPagination(post);
@@ -92,4 +98,6 @@ public class PostServiceImpl implements PostService{
         return post.map(entityToModelMapper::map)
                 .getContent();
     }
+
+
 }
